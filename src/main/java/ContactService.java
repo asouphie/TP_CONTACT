@@ -33,6 +33,8 @@ public class ContactService {
         if(!contactDao.isContactExist(nom)) {
             throw new IllegalArgumentException("Aucuns contacts ne porte ce nom : '" + nom + "'.");
         }
-        contactDao.supprimerContact(nom);
+        if(!contactDao.supprimerContact(nom)){
+            throw new IllegalArgumentException("Impossible de supprimer le contact.");
+        }
     }
 }

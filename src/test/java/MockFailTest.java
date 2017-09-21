@@ -56,7 +56,7 @@ public class MockFailTest extends MockTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testSupprimerContactCasPasValide() throws Exception {
+    public void testSupprimerContactCasNomExistePas() throws Exception {
         //Phase d'enregistrement des comportements
         String nom = "ContactOk";
         String tel = "06-75-84-91-96";
@@ -72,8 +72,20 @@ public class MockFailTest extends MockTest {
         verifyAll();
     }
 
-    @Test
-    public void testSupprimerContactCasValide() throws Exception {
-        //TODO : A FAIRE
+    @Test (expected = IllegalArgumentException.class)
+    public void testSupprimerContactNonValide() throws Exception {
+        //Phase d'enregistrement des comportements
+        String nom = "ContactOk";
+        EasyMock.expect(dao.isContactExist(nom)).andReturn(true);
+        EasyMock.expect(dao.supprimerContact(nom)).andReturn(false);
+
+        //Fin de l'enregistrement
+        replayAll();
+
+        //Appel de la méthode
+        service.supprimerContact(nom);
+
+        //Verification
+        verifyAll();
     }
 }
