@@ -16,8 +16,8 @@ public class MockFailTest extends MockTest {
     @Mock
     private IContactDao dao;
 
-    @Test
-    public void testCreerContactCasValide() throws Exception {
+    @Test (expected = IllegalArgumentException.class)
+    public void testCreerContactCasPasValide() throws Exception {
         //Phase d'enregistrement des comportements
         String nom = "ContactOk";
         String tel = "06-75-84-91-96";
@@ -26,15 +26,30 @@ public class MockFailTest extends MockTest {
         //Fin de l'enregistrement
         replayAll();
 
+        //Appel de la méthode
+        service.creerContact(nom, tel);
+
+        //Verification
+        verifyAll();
+    }
+
+    @Test
+    public void testCreerContactCasValide() throws Exception {
+        //Phase d'enregistrement des comportements
+        String nom = "ContactOk";
+        String tel = "06-75-84-91-96";
+        EasyMock.expect(dao.isContactExist(nom)).andReturn(false);
         Capture<Contact> capture = EasyMock.newCapture();
         dao.creerContact(EasyMock.capture(capture));
+
+        //Fin de l'enregistrement
+        replayAll();
 
         //Appel de la méthode
         service.creerContact(nom, tel);
 
         //Verification
         verifyAll();
-
         Contact contact = capture.getValue();
         Assert.assertEquals(nom, contact.getNom());
         Assert.assertEquals(tel, contact.getTel());
