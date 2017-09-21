@@ -29,4 +29,16 @@ public class ContactDaoTest {
         //TEST : DEMANDE D'UN CONTACT PAS EXISTANT ENCORE
         Assert.assertEquals(contactDao.recupererContact("contact0"), null);
     }
+
+    @Test
+    public void supprimerContact() throws Exception {
+        ContactDao contactDao = new ContactDao();
+        contactDao.creerContact(new Contact("contact1", "06-72-94-72-64"));
+        contactDao.creerContact(new Contact("contact2", "06-72-94-72-64"));
+        contactDao.creerContact(new Contact("contact3", "06-72-94-72-64"));
+        //TEST : SUPPRESSION D'UN CONTACT DEJA EXISTANT
+        Assert.assertTrue(contactDao.supprimerContact("contact1"));
+        //TEST : DEMANDE D'UN CONTACT PAS EXISTANT ENCORE
+        Assert.assertFalse(contactDao.supprimerContact("contact0"));
+    }
 }

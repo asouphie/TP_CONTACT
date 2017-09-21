@@ -36,7 +36,15 @@ public class ContactDao implements IContactDao {
         return null;
     }
 
-    public void supprimerContact(String nom) {
-        //TODO
+    public boolean supprimerContact(String nom) {
+        if(!nom.isEmpty()) {
+            for(Contact contact : listContact) {
+                if(nom.equals(contact.getNom())) {
+                    listContact.remove(contact);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
