@@ -13,7 +13,7 @@ public class ContactService {
         if(nom == null) {
             throw new IllegalArgumentException("Le nom est obligatoire");
         }
-        if(nom.length() <= 3 || nom.length() >= 40) {
+        if(nom.length() < 3 || nom.length() > 40) {
             throw new IllegalArgumentException("La longueur du nom doit être de 3 à 40 caractères.");
         }
         if(contactDao.isContactExist(nom)) {
