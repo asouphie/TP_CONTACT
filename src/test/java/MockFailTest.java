@@ -54,22 +54,4 @@ public class MockFailTest extends MockTest {
         Assert.assertEquals(nom, contact.getNom());
         Assert.assertEquals(tel, contact.getTel());
     }
-
-    @Test (expected = IllegalArgumentException.class)
-    public void testSupprimerContactCasPasValide() throws Exception {
-        //Phase d'enregistrement des comportements
-        String nom = "ContactOk";
-        String tel = "06-75-84-91-96";
-        EasyMock.expect(dao.isContactExist(nom)).andReturn(false);
-
-        //Fin de l'enregistrement
-        replayAll();
-
-        //Appel de la méthode
-        service.supprimerContact(nom);
-
-        //Verification
-        verifyAll();
-    }
-
 }
